@@ -14,12 +14,13 @@ SAMPLE = BASE / "sample"
 SOLR = "http://localhost:8983/solr/impactgt/select"
 
 query = sys.argv[1]
+field = sys.argv[2] if len(sys.argv) > 2 else "ocr_text"
 
 params = {
-    "q": f"ocr_text:{query}",
+    "q": f"{field}:{query}",
     "fl": "id",
     "hl": "true",
-    "hl.ocr.fl": "ocr_text",
+    "hl.ocr.fl": field,
     "wt": "json",
 }
 
@@ -44,7 +45,7 @@ for docid, fields in result.get("ocrHighlighting", {}).items():
 
     count = 0
 
-    for snippet in fields["ocr_text"]["snippets"]:
+    for snippet in fields[field]["snippets"]:
         for group in snippet["highlights"]:
             for hit in group:
                 region = snippet["regions"][hit["parentRegionIdx"]]
