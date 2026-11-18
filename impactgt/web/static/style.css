@@ -1,0 +1,12 @@
+body {font: 16px system-ui,sans-serif; margin: 0; color: #222; background: #fafafa}
+main {max-width: 1150px; margin: auto; padding: 1rem}
+h1 {font-size: 1.6rem}
+form,.toolbar {display:flex; flex-wrap:wrap; gap:1rem; align-items:center}
+label {display:inline-flex; gap:.4rem; align-items:center}
+input,select,button {font:inherit; padding:.35rem}
+#hint {color:#555}
+#viewport {overflow:auto; margin-top:1rem; background:#ddd; max-height:78vh}
+#sheet {position:relative; width:100%}
+#sheet img {display:block; width:100%; height:auto}
+#sheet svg {position:absolute; inset:0; width:100%; height:100%}
+#sheet rect {fill:yellow; fill-opacity:.35; stroke:#e00000; stroke-width:2}
