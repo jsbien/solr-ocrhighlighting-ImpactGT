@@ -1,0 +1,17 @@
+<config>
+  <luceneMatchVersion>9.0</luceneMatchVersion>
+
+  <!-- Only used when running a local development build -->
+
+  <searchComponent class="solrocr.OcrHighlightComponent"
+                   name="ocrHighlight" />
+
+  <requestHandler name="/select" class="solr.SearchHandler">
+    <arr name="components">
+      <str>query</str>
+      <str>ocrHighlight</str>
+      <str>highlight</str>
+      <str>debug</str>
+    </arr>
+  </requestHandler>
+</config>

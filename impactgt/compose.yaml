@@ -1,0 +1,20 @@
+services:
+  solr:
+    image: solr:10.1
+    ports:
+      - "127.0.0.1:8983:8983"
+    volumes:
+      - ./plugins/solr-ocrhighlighting-0.11.0.jar:/opt/solr/lib/solr-ocrhighlighting-0.11.0.jar:ro
+      - ./solr:/opt/core-config:ro
+      - ../sample:/data:ro
+      - index-data:/var/solr
+    environment:
+      SOLR_HEAP: 2g
+      SOLR_SECURITY_MANAGER_ENABLED: "false"
+    command:
+      - solr-precreate
+      - impactgt
+      - /opt/core-config
+
+volumes:
+  index-data:
