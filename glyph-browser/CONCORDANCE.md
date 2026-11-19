@@ -41,3 +41,13 @@ All generated data remain local. Do not publish the data indiscriminately:
 historical publication restrictions still need investigation. The generator
 does not require images or Solr. Full corpus testing must be performed locally;
 review build-report.json before implementation of the browser.
+
+## Known PAGE identifier exception
+
+The first corpus run found PAGE imageFilename stem `00437021_B` where the
+metadata expects `00437021`. The generator accepts this explicit alias only if
+the XML member stem (after an optional `pc-` prefix) and the metadata agree.
+It preserves the original imageFilename and page_image_id in pages.json and
+logs the exception in build-report.json. No other suffixes are stripped.
+The corresponding master image filename and dimensions still need verification
+before displaying its glyph coordinates.

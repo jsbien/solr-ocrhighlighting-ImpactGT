@@ -10,6 +10,9 @@ from zipfile import ZipFile
 
 from aletheia_names import NAMES, SOURCE
 
+# Exceptional PAGE imageFilename stems; validate against XML member and metadata.
+PAGE_ID_ALIASES = {"00437021_B": "00437021"}
+
 
 def load(path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -121,8 +124,9 @@ def main():
     lists = defaultdict(list)
     diagnostics = Counter()
     archive_counts = defaultdict(Counter)
+    applied_aliases = []
     with ExitStack() as stack:
-        # Identify pages by authoritative PAGE imageFilename, not ZIP member name.
+        # Use PAGE imageFilename except for explicitly documented exceptions.
         for path in a.archives:
             if path.name in zips:
                 raise ValueError(f"Duplicate archive basename {path.name}")
@@ -135,7 +139,19 @@ def main():
                     found = ET.parse(f).getroot().findall(".//{*}Page")
                 if len(found) != 1:
                     raise ValueError(f"{path.name}:{item.filename}: expected one Page")
-                pid = page_id(found[0])
+                raw_pid = page_id(found[0])
+                pid = PAGE_ID_ALIASES.get(raw_pid, raw_pid)
+                if pid != raw_pid:
+                    member_id = PurePosixPath(item.filename).stem.removeprefix("pc-")
+                    if member_id != pid or pid not in pages:
+                        raise ValueError(f"Unconfirmed page alias: {raw_pid!r} -> {pid!r}, "
+                                         f"XML member {item.filename!r}")
+                    applied_aliases.append({
+                        "page_id": pid, "page_image_id": raw_pid,
+                        "archive": path.name, "xml_member": item.filename,
+                        "image_filename": found[0].get("imageFilename"),
+                    })
+                    print(f"PAGE identifier exception: {raw_pid} -> {pid}", flush=True)
                 if not pid or pid in members:
                     raise ValueError(f"Missing or duplicate page ID: {pid!r}")
                 members[pid] = (path.name, item)
@@ -153,6 +169,7 @@ def main():
             page_data[pid] = {
                 **pages[pid], "archive": archive, "xml_member": item.filename,
                 "image_filename": page.get("imageFilename"),
+                "page_image_id": page_id(page),
                 "width": int(page.get("imageWidth")), "height": int(page.get("imageHeight")),
                 "physical_order": i, "glyph_count": total,
             }
@@ -197,6 +214,7 @@ def main():
         "distinct_glyph_transcriptions": len(entries),
         "glyph_occurrences": sum(actual.values()), "glyph_elements": total,
         "diagnostics": dict(diagnostics),
+        "page_id_aliases": applied_aliases,
         "order": "book_id, sequence_in_subset, page_id, PAGE XML glyph order",
         "frequency_check": "matches inventory including per-archive frequencies",
         "word_span_units": "zero-based Unicode code points, end exclusive; null if not aligned",
