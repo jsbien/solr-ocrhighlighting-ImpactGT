@@ -8,6 +8,7 @@ from pathlib import Path, PurePosixPath
 import unicodedata as ud
 import xml.etree.ElementTree as ET
 from zipfile import ZipFile
+from aletheia_names import NAMES, SOURCE
 
 
 # Documented corpus-specific assignment, not a change to source text.
@@ -44,6 +45,9 @@ def describe(c, mufi):
         name = ud.name(c, None)
         return {"code": codepoints(c), "name": name or codepoints(c),
                 "name_source": "Unicode" if name else "unnamed Unicode"}
+    if cp in NAMES:
+        return {"code": codepoints(c), "name": NAMES[cp],
+                "name_source": SOURCE}
     target = MUFI_OVERRIDES.get(cp, cp)
     if target in mufi:
         result = {"code": codepoints(c), "name": mufi[target],
