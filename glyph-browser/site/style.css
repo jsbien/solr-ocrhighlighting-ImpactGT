@@ -1,0 +1,30 @@
+@font-face {font-family:Junicode;src:url("vendor/JunicodeVF-Roman.woff2") format("woff2");font-display:swap;}
+* {box-sizing:border-box}
+body {margin:0;font-family:system-ui,sans-serif;color:#202124;background:#f9fafb;height:100vh;display:flex;flex-direction:column}
+header {padding:.6rem 1rem;border-bottom:1px solid #bfc5cc;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+h1 {font-size:1.25rem;margin:0} h2 {font-size:1rem;margin:.5rem 0} p {margin:.35rem 0}
+#summary,#page-info,#selected-name,#range,#image-status {font-size:.82rem;color:#4b5563}
+main {display:grid;grid-template-columns:minmax(260px,25%) minmax(0,1fr);flex:1;min-height:0}
+aside {border-right:1px solid #bfc5cc;overflow:auto;padding:.75rem;background:white}
+.right {min-width:0;min-height:0;display:flex;flex-direction:column}
+#page-meta {padding:.4rem .8rem;max-height:20vh;overflow:auto}
+#page-title {overflow-wrap:anywhere}
+#viewer {flex:1;min-height:0;background:#30343b}
+.toolbar,#pagination {display:flex;align-items:center;gap:.4rem;padding:.4rem;flex-wrap:wrap}
+.toolbar {border-block:1px solid #bec5ce}
+button,select,input {font:inherit;padding:.35rem .45rem;border:1px solid #aeb7c2;background:white;border-radius:4px;color:inherit}
+button {cursor:pointer} button:disabled {opacity:.45;cursor:default} button:focus-visible {outline:2px solid #1459ae;outline-offset:1px}
+label {display:block;font-size:.8rem;margin:.6rem 0 .2rem}
+input,select {width:100%}
+#inventory,#occurrences {margin-top:.5rem}
+.entry {display:block;width:100%;text-align:left;border:0;border-bottom:1px solid #e0e4e9;border-radius:0;padding:.45rem;background:white}
+.entry:hover {background:#edf3fa}
+.entry[aria-current="true"] {background:#dceaff;outline:1px solid #6496d3}
+.inventory-row {display:grid;grid-template-columns:2.4rem minmax(0,1fr);gap:.5rem;align-items:center}
+.transcription {font-family:Junicode,serif;font-size:1.45rem;overflow-wrap:anywhere}
+.code,.detail,.name {display:block;font-size:.75rem;overflow-wrap:anywhere}
+.name {color:#4b5563}
+mark {background:#ffe78d;color:inherit}
+.glyph-overlay {border:2px solid #da2419;background:rgba(255,225,0,.28);pointer-events:none}
+[hidden] {display:none!important}
+@media(max-width:650px){main{grid-template-columns:minmax(160px,40%) minmax(0,1fr)} aside{padding:.4rem} header{gap:.3rem} .inventory-row{grid-template-columns:1.6rem minmax(0,1fr)}}

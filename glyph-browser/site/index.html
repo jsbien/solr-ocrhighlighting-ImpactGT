@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IMPACT GT Glyph Browser</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="vendor/openseadragon.min.js"></script>
+<script defer src="browser.js"></script>
+</head>
+<body>
+<header><h1>IMPACT GT Glyph Browser</h1><span id="summary" role="status">Loading inventory…</span></header>
+<main>
+<aside aria-label="Glyph navigation">
+<div id="inventory-panel">
+<h2>Glyph inventory</h2>
+<label for="filter">Filter by code or name</label>
+<input id="filter" type="search" autocomplete="off">
+<div id="inventory"></div>
+</div>
+<div id="occurrence-panel" hidden>
+<button id="back" type="button">← Glyph inventory</button>
+<h2 id="selected-glyph"></h2>
+<p id="selected-name"></p>
+<label for="group">Collection</label>
+<select id="group"><option value="">Both</option><option value="ANTIQUA">Antiqua</option><option value="GOTHIC">Gothic</option></select>
+<label for="sort">Order</label>
+<select id="sort"><option value="physical">Physical occurrence</option><option value="alphabetical">Alphabetical (Polish)</option></select>
+<div id="pagination"><button id="previous" type="button">Previous</button><span id="range"></span><button id="next" type="button">Next</button></div>
+<div id="occurrences"></div>
+</div>
+</aside>
+<section class="right" aria-label="Scanned page">
+<div id="page-meta"><h2 id="page-title">Page viewer</h2><p id="page-info">Select an occurrence.</p></div>
+<div class="toolbar"><button id="zoom-in" type="button">+</button><button id="zoom-out" type="button">−</button><button id="home" type="button">Full page</button><button id="focus" type="button">Selected glyph</button><span id="image-status" role="status"></span></div>
+<div id="viewer" aria-label="Zoomable page image"></div>
+</section>
+</main>
+</body></html>
