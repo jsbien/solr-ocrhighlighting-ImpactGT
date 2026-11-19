@@ -49,5 +49,29 @@ metadata expects `00437021`. The generator accepts this explicit alias only if
 the XML member stem (after an optional `pc-` prefix) and the metadata agree.
 It preserves the original imageFilename and page_image_id in pages.json and
 logs the exception in build-report.json. No other suffixes are stripped.
-The corresponding master image filename and dimensions still need verification
-before displaying its glyph coordinates.
+The local archive check confirmed `00437021.tif` (2408 x 3136 pixels), and all
+478 TIFF dimensions agreed with PAGE.
+
+## Prepare browser images
+
+Run with Pillow installed, e.g. in the existing page-to-alto environment:
+
+```bash
+source ~/.venvs/page-to-alto/bin/activate
+work="$HOME/Cykat-recovery/IMPACT-GT-detailed"
+python3 glyph-browser/prepare_images.py \
+  "$work/PSNC_POLISH_ANTIQUA_MasterFiles.ZIP" \
+  "$work/PSNC_POLISH_GOTHIC_MasterFiles.ZIP" \
+  --data "$work/glyph-browser-data"
+```
+
+Writes images/<page_id>.png and image-build-report.json under the local data
+ directory. No extraction of TIFFs, cropping, resizing, rotation or enhancement.
+PNG is losslessly compressed; common supported TIFF color modes are retained,
+with explicit conversions for CMYK/YCbCr and 16-bit byte order when necessary.
+Unrecognized modes and multi-frame TIFFs stop the conversion for review.
+Existing PNGs with matching dimensions and valid file structure are reused
+unless --overwrite is specified. This is not a pixel-by-pixel comparison with
+the TIFF; the report counts mode conversions performed during this run only.
+Check available disk space before starting; PNG output size is not known in
+advance. Keep images and generated concordance outside Git.
