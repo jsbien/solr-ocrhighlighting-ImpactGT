@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IMPACT GT — porównanie transkrypcji</title>
+<link rel="stylesheet" href="report.css">
+<script defer src="../vendor/openseadragon.min.js"></script><script defer src="report.js"></script></head>
+<body>
+<header><h1>IMPACT GT — porównanie transkrypcji</h1><a href="../">Przeglądarka glifów</a><details><summary>Statystyka</summary><div id="stats"></div></details></header>
+<main>
+<aside>
+<label for="mode">Widok</label><select id="mode"><option value="pairs">Pary zmian</option><option value="regions">Regiony według statusu</option><option value="missing">Niedopasowane strony</option></select>
+<section id="pair-panel"><label for="query">Filtr znaków lub kodów Unicode</label><input id="query" type="search"><label for="sort">Sortowanie</label><select id="sort"><option value="count">Frekwencja</option><option value="code">Kod znaków</option></select><div id="pairs"></div></section>
+<section id="region-panel" hidden><label for="category">Status</label><select id="category"></select></section>
+<section id="matches-panel"><h2 id="match-title">Wystąpienia</h2><div class="controls"><button id="prev">Wstecz</button><span id="range"></span><button id="next">Dalej</button></div><div id="matches"></div></section>
+</aside>
+<section class="right">
+<div id="meta" role="status">Wybierz parę zmian lub region.</div>
+<div class="readings"><section><h2>Paragrafowa</h2><div id="before"></div></section><section><h2>Szczegółowa</h2><div id="after"></div></section></div>
+<div id="legend" class="controls"><button id="home">Cała strona</button><button id="focus">Region</button><span><i class="swatch para"></i> Paragrafowa</span><span><i class="swatch detail"></i> Szczegółowa</span><span id="image-status"></span></div>
+<div id="viewer"></div>
+</section>
+</main>
+</body></html>
